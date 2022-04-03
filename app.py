@@ -14,7 +14,7 @@ from flask_login import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import find_dotenv, load_dotenv
-from models import db, Account
+from models import db, Account, Comment, Like, Tag, Story
 
 load_dotenv(find_dotenv())
 app = flask.Flask(__name__)
