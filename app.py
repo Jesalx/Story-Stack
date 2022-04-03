@@ -42,7 +42,6 @@ def load_user(user_id):  # pylint: disable=missing-function-docstring
 
 
 @app.route("/")
-@login_required
 def main():
     return flask.render_template("index.html")
 
