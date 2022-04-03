@@ -1,4 +1,7 @@
+# pylint: disable=no-member
+# pylint: disable=too-few-public-methods
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 import datetime
 
 db = SQLAlchemy()
@@ -8,7 +11,7 @@ def get_date():
     return datetime.datetime.now()
 
 
-class user(db.Model):
+class Account(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32), unique=True, nullable=False)
     # this has been left nullable to allow for users logging in using google oauth not to have to also set a password. login attempts or account creation attempts without a password should still not be allowed
@@ -21,7 +24,7 @@ class user(db.Model):
         return "User %r" % self.username
 
 
-class comment(db.Model):
+class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userid = db.Column(db.Integer, unique=False, nullable=False)
     storyid = db.Column(db.Integer, unique=False, nullable=False)
@@ -31,7 +34,7 @@ class comment(db.Model):
         return "Comment %r" % self.text
 
 
-class like(db.Model):
+class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userid = db.Column(db.Integer, unique=False, nullable=False)
     storyid = db.Column(db.Integer, unique=False, nullable=False)
@@ -40,7 +43,7 @@ class like(db.Model):
         return "Like %r %r" % self.userid % self.storyid
 
 
-class tag(db.Model):
+class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userid = db.Column(db.Integer, unique=False, nullable=False)
     storyid = db.Column(db.Integer, unique=False, nullable=False)
@@ -50,7 +53,7 @@ class tag(db.Model):
         return "Tag %r" % self.text
 
 
-class story(db.Model):
+class Story(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userid = db.Column(db.Integer, unique=False, nullable=False)
     text = db.Column(db.String(128), unique=False, nullable=False)
