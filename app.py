@@ -66,17 +66,24 @@ def signup_post():
     user and refresh the page, otherwise we make create the user and redirect
     them to the login page.
     """
+    email = flask.request.form.get("email").lower()
     username = flask.request.form.get("username").lower()
     password = flask.request.form.get("password")
 
-    user = Account.query.filter_by(username=username).first()
-
+    user = Account.query.filter_by(email=email).first()
     if user:
-        flask.flash("User already exists.")
+        flask.flash("Email already exists.")
+        return flask.redirect("/signup")
+
+    user = Account.query.filter_by(username=username).first()
+    if user:
+        flask.flash("Username already exists.")
         return flask.redirect("/signup")
 
     new_user = Account(
-        username=username, password=generate_password_hash(password, method="sha256")
+        email=email,
+        username=username,
+        password=generate_password_hash(password, method="sha256"),
     )
 
     db.session.add(new_user)
@@ -106,13 +113,14 @@ def login_post():
     valid username/password combo then they are logged in, otherwise they
     are flashed a message notifying them and the page is refreshed.
     """
-    username = flask.request.form.get("username").lower()
+
+    email = flask.request.form.get("email").lower()
     password = flask.request.form.get("password")
 
-    user = Account.query.filter_by(username=username).first()
+    user = Account.query.filter_by(email=email).first()
 
     if not user or not check_password_hash(user.password, password):
-        flask.flash("Incorrect username or password.")
+        flask.flash("Incorrect email or password.")
         return flask.redirect("/login")
 
     login_user(user, remember=True)
