@@ -39,6 +39,12 @@ class ExtractTagsTests(unittest.TestCase):
         actual_output = extract_tags(test_string)
         self.assertEqual(expected_output, actual_output)
 
+    def test_nospace_regular_string(self):
+        test_string = "tag1,tag2,tag3"
+        expected_output = set(["tag1", "tag2", "tag3"])
+        actual_output = extract_tags(test_string)
+        self.assertEqual(expected_output, actual_output)
+
 
 if __name__ == "__main__":
     unittest.main()
