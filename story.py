@@ -7,6 +7,10 @@ def extract_tags(input_string: str):
     """
     Takes a string and returns a list of tags.
     """
+
+    if not input_string.strip():
+        return []
+
     tags = set()
     for tag in input_string.split(","):
         tags.add(tag.strip().lower())
