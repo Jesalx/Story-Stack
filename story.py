@@ -3,16 +3,16 @@ File containing backend functions for the processing of stories.
 """
 
 
-def extract_tags(input_string: str):
+def extract_tags(input_string: str) -> set:
     """
-    Takes a string and returns a list of tags.
+    Takes a string and returns a set of tags.
     """
-
-    if not input_string.strip():
-        return []
-
     tags = set()
     for tag in input_string.split(","):
-        tags.add(tag.strip().lower())
+        cleaned_tag = tag.strip().lower()
+        tags.add(cleaned_tag)
 
-    return list(tags)
+    if "" in tags:
+        tags.remove("")
+
+    return tags
