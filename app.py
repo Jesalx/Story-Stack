@@ -66,17 +66,24 @@ def signup_post():
     user and refresh the page, otherwise we make create the user and redirect
     them to the login page.
     """
+    email = flask.request.form.get("email").lower()
     username = flask.request.form.get("username").lower()
     password = flask.request.form.get("password")
 
-    user = Account.query.filter_by(username=username).first()
-
+    user = Account.query.filter_by(email=email).first()
     if user:
-        flask.flash("User already exists.")
+        flask.flash("Email already exists.")
+        return flask.redirect("/signup")
+
+    user = Account.query.filter_by(username=username).first()
+    if user:
+        flask.flash("Username already exists.")
         return flask.redirect("/signup")
 
     new_user = Account(
-        username=username, password=generate_password_hash(password, method="sha256")
+        email=email,
+        username=username,
+        password=generate_password_hash(password, method="sha256"),
     )
 
     db.session.add(new_user)
@@ -106,13 +113,14 @@ def login_post():
     valid username/password combo then they are logged in, otherwise they
     are flashed a message notifying them and the page is refreshed.
     """
-    username = flask.request.form.get("username").lower()
+
+    email = flask.request.form.get("email").lower()
     password = flask.request.form.get("password")
 
-    user = Account.query.filter_by(username=username).first()
+    user = Account.query.filter_by(email=email).first()
 
     if not user or not check_password_hash(user.password, password):
-        flask.flash("Incorrect username or password.")
+        flask.flash("Incorrect email or password.")
         return flask.redirect("/login")
 
     login_user(user, remember=True)
@@ -138,6 +146,36 @@ def profile():
     them to modify their rating or delete comments.
     """
     return flask.render_template("profile.html")
+
+
+@app.route("/post", methods=["POST"])
+@login_required
+def post():
+    parent = flask.request.form.get("parent")
+    userid = current_user.username
+    text = flask.request.form.get("text")
+    title = flask.request.form.get("title")
+    taglist = flask.request.form.get("tags")
+    new_story = Story(
+        parent=parent,
+        userid=userid,
+        text=text,
+        title=title,
+    )
+    # TODO: Add addtags function to parse taglist into database objects
+    db.session.add(new_story)
+    db.session.commit()
+    return flask.render_template()
+
+
+@app.route("/orphan", methods=["POST"])
+@login_required
+def orphan():
+    storyid = flask.request.form.get("id")
+    story = Story.query.filter_by(id=storyid).first()
+    story.userid = None
+    db.session.commit()
+    return flask.redirect()
 
 
 app.run(
