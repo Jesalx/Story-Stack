@@ -55,7 +55,8 @@ class Tag(db.Model):
 
 class Story(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    userid = db.Column(db.Integer, unique=False, nullable=False)
+    parent = db.Column(db.Integer, unique=False, nullable=True)
+    userid = db.Column(db.Integer, unique=False, nullable=True)
     text = db.Column(db.String(128), unique=False, nullable=False)
     date_posted = db.Column(db.Date, default=get_date, unique=False, nullable=False)
     date_updated = db.Column(db.Date, onupdate=get_date, unique=False, nullable=True)

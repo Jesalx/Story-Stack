@@ -148,6 +148,36 @@ def profile():
     return flask.render_template("profile.html")
 
 
+@app.route("/post", methods=["POST"])
+@login_required
+def post():
+    parent = flask.request.form.get("parent")
+    userid = current_user.username
+    text = flask.request.form.get("text")
+    title = flask.request.form.get("title")
+    taglist = flask.request.form.get("tags")
+    new_story = Story(
+        parent=parent,
+        userid=userid,
+        text=text,
+        title=title,
+    )
+    # TODO: Add addtags function to parse taglist into database objects
+    db.session.add(new_story)
+    db.session.commit()
+    return flask.render_template()
+
+
+@app.route("/orphan", methods=["POST"])
+@login_required
+def orphan():
+    storyid = flask.request.form.get("id")
+    story = Story.query.filter_by(id=storyid).first()
+    story.userid = None
+    db.session.commit()
+    return flask.redirect()
+
+
 app.run(
     host=os.getenv("IP", "0.0.0.0"),
     port=int(os.getenv("PORT", 8080)),  # pylint: disable=invalid-envvar-default
