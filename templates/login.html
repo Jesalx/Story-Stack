@@ -1,12 +1,13 @@
 <html>
 
     <head>
-        <link rel="stylesheet" href="/static/style.css" />
+        <link rel="stylesheet" href="/static/signup.css" />
     </head>
 
     <body>
-        <div class="login">
-            <h2>Login</h2>
+        <div class="content">
+            <img src = "static/logo2.png" class = "logo">
+            <h1>LogIn</h1>
             <div id="messages" class="messages">
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -16,9 +17,6 @@
                 {% endif %}
                 {% endwith %}
             </div>
-
-
-            <div class="login_form">
                 <form method="POST" action="/login" onsubmit="return meetsLoginConditions();">
                     <input class="login_field" id="email" type="text" name="email" placeholder="Email">
                     <br>
@@ -26,9 +24,8 @@
                     <br>
                     <input class="login_submit" type="submit" value="Log in">
                 </form>
-            </div>
 
-            <p>Don't have an account yet? <a href="{{ url_for('signup') }}">Signup</a></p>
+            <p>Don't have an account yet? <a href="{{ url_for('signup') }}">Sign up</a></p>
         </div>
         <script type="text/javascript" src="static/script.js"></script>
     </body>

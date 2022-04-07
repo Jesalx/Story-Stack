@@ -1,12 +1,13 @@
 <html>
 
     <head>
-        <link rel="stylesheet" href="/static/style.css" />
+        <link rel="stylesheet" href="/static/signup.css" />
     </head>
 
     <body>
-        <div class="login">
-            <h2>Signup</h2>
+        <div class="content">
+            <img src = "static/logo2.png" class = "logo">
+            <h1>Join Today!</h1>
             <div id="messages" class="messages">
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -16,8 +17,6 @@
                 {% endif %}
                 {% endwith %}
             </div>
-
-            <div class="login_form">
                 <form method="POST" action="/signup" onsubmit="return meetsSignupConditions();">
                     <input class="login_field" id="email" type="text" name="email" placeholder="Email">
                     <br>
@@ -30,10 +29,8 @@
                     <br>
                     <input class="login_submit" id="submit_button" type="submit" value="Sign up">
                 </form>
-            </div>
-
-
-            <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+            <p> By signing up, you agree to the <br> <a href = "#"> Terms of Service</a> and <a href ="#"> Privacy Policy </a></p>
+            <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
         </div>
         <script type="text/javascript" src="static/script.js"></script>
     </body>
