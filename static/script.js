@@ -25,7 +25,7 @@ function meetsSignupConditions() {
 
     // How to use regular expressions in Javascript from:
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
-    const email_re = /^[0-9a-zA-Z]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
+    const email_re = /^[0-9a-zA-Z.]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
     if (!email.match(email_re)) {
         err_msg.innerText = "Please provie a valid email.";
         return false;
