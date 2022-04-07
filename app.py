@@ -148,11 +148,21 @@ def profile():
     return flask.render_template("profile.html")
 
 
+@app.route("/post", methods=["GET"])
+@login_required
+def post_form():
+    parent_id = flask.request.args.get("parent")
+    if not parent_id:
+        parent_id = -1
+    return flask.render_template("post.html", parent_id=parent_id)
+
+
 @app.route("/post", methods=["POST"])
 @login_required
 def post():
-    parent = flask.request.form.get("parent")
-    userid = current_user.username
+    parent = flask.request.args.get("parent")
+    # TODO: Handle case where user changes this value in URL to non-integer.
+    userid = current_user.id
     text = flask.request.form.get("text")
     title = flask.request.form.get("title")
     taglist = flask.request.form.get("tags")
@@ -165,7 +175,8 @@ def post():
     # TODO: Add addtags function to parse taglist into database objects
     db.session.add(new_story)
     db.session.commit()
-    return flask.render_template()
+    # TODO: This should redirect to the story page
+    return flask.render_template("index.html")
 
 
 @app.route("/orphan", methods=["POST"])
