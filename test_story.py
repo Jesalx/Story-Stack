@@ -1,8 +1,16 @@
+"""
+Module for testing story.py
+"""
+# pylint: disable=missing-function-docstring
 import unittest
 from story import extract_tags
 
 
 class ExtractTagsTests(unittest.TestCase):
+    """
+    This Class contains test for the extract_tags function of story.py
+    """
+
     def test_regular_string(self):
         test_string = "tag1, tag2, tag3"
         expected_output = set(["tag1", "tag2", "tag3"])
