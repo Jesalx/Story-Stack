@@ -192,6 +192,9 @@ def orphan():
     db.session.commit()
     return flask.redirect()
 
+@app.route("/story")
+def story():
+    return flask.render_template("story.html")
 
 app.run(
     host=os.getenv("IP", "0.0.0.0"),
