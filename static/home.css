@@ -15,6 +15,9 @@ nav{
     justify-content: space-between;
     padding: 5px 5%;
     background-color: rgba(132, 77, 35, 0.8);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .logo{
@@ -30,7 +33,7 @@ nav{
 .search-box{
     margin-right: 300px;
     background: #efefef;
-    width: 350px;
+    width: 450px;
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -57,6 +60,7 @@ nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-right: -75px;
 }
 
 .content ul li{
@@ -93,3 +97,70 @@ nav{
     padding: 13px 5%;
 }
 
+.left-sidebar{
+    height: 50vh;
+    flex-basis: 15%;
+    position: sticky;
+    top: 70px;
+    align-self: flex-start;
+    border-radius: 15px;
+    background: rgba(132, 77, 35, 0.8);
+    color: white;
+    margin-left: -50px;
+    margin-top: 20px;
+    
+}
+
+.left-sidebar .menu-item{
+    display: flex;
+    align-items: center;
+    height: 4rem;
+    cursor: pointer;
+    translate: all 300ms ease;
+    position: relative;
+    margin-top: 5px;
+    margin-left: 30px
+}
+
+.left-sidebar .menu-item:hover{
+    background: rgba(132, 77, 35) ;
+    width: 150px;
+    border-radius: 25px;
+}
+
+.left-sidebar .button{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.left-sidebar .btn{
+    text-decoration: none;
+    width: 200px;
+    padding: 10px 25px;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid #844D23;
+    background: transparent;
+    color: #fff; 
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.6 ease;
+    background: #844D23;
+}
+
+
+.right-sidebar{
+    background: #cbdffa ;
+    flex-basis: 25%;
+    position: sticky;
+    top: 70px;
+    align-self: flex-start;
+    
+}
+
+
+.main-content{
+    flex-basis: 47%;
+}

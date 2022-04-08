@@ -58,7 +58,7 @@ def signup():
     logged in then they will be taken to the main page of the application.
     """
     if current_user.is_authenticated:
-        return flask.redirect("/")
+        return flask.redirect("/home")
     return flask.render_template("signup.html")
 
 

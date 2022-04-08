@@ -14,7 +14,6 @@
                     <li> <a href = "#"> About Us </a></li>
                     <li> <a href = "#"> Features </a></li>
                     <li> <a href = "#"> Help </a></li>
-                    <li> <a href = "#"> Log out </a></li>
                 </ul>
             </div>
 
@@ -22,8 +21,8 @@
                 <h1> STORY STACK</h1>
                 <p> A story for you written by you, <br> You are the only author here, <br> Begin your story</p>
                 <div class = "button">
-                    <a href="{{url_for('signup')}}" class="btn">  CREATE AN ACCOUNT</a>
-                    <a href="{{url_for('login')}}" class="btn">  LOG IN</a>
+                    <a href="{{ url_for('signup') }}" class="btn">  CREATE AN ACCOUNT</a>
+                    <a href="{{ url_for('login') }}" class="btn">  LOG IN</a>
                 </div>
             </div>
         </div>
