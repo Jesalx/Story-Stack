@@ -41,10 +41,10 @@ form input {
 }
 
 input[type="submit"] {
-    width: 200px;
-    margin-left: 75px;
     height: 35px;
     margin-top: 20px;
+    width: 200px;
+    margin-left: 75px;
     border: none;
     background-color: #fff;
     color: black;
