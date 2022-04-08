@@ -1,5 +1,5 @@
 """
-File containing backend functions for the processing of stories.
+Module containing backend functions for the processing of stories.
 """
 
 

@@ -3,6 +3,7 @@ Story Stack - Main flask app
 """
 
 # pylint: disable=no-member
+# pylint: disable=unused-import
 import os
 import flask
 from flask_login import (
@@ -44,6 +45,9 @@ def load_user(user_id):  # pylint: disable=missing-function-docstring
 
 @app.route("/")
 def main():
+    """
+    App route for users that aren't currently logged in.
+    """
     if current_user.is_authenticated:
         return flask.redirect(flask.url_for("homepage"))
     return flask.render_template("index.html")
@@ -51,6 +55,10 @@ def main():
 
 @app.route("/home")
 def homepage():
+    """
+    App route for the homepage of the application where users
+    can access the application's functionality.
+    """
     return flask.render_template("home.html")
 
 
@@ -139,10 +147,10 @@ def login_post():
 @login_required
 def logout():
     """
-    This route logs out the user and redirects them to the login page.
+    This route logs out the user and redirects them to index page.
     """
     logout_user()
-    return flask.redirect("/login")
+    return flask.redirect("/")
 
 
 @app.route("/profile", methods=["GET"])
@@ -158,6 +166,9 @@ def profile():
 
 @app.route("/story", methods=["GET"])
 def story():
+    """
+    This route is the route to view a single story page.
+    """
     story_id = flask.request.args.get("story_id")
     if not story_id:
         story_id = 0
@@ -172,6 +183,11 @@ def story():
 @app.route("/post", methods=["GET"])
 @login_required
 def post_form():
+    """
+    This route is for the posting page of stories. The parent of the story
+    being written is a parameter in the URL. If there is no parent story then
+    the default id is currently -1 for root stories.
+    """
     parent_id = flask.request.args.get("parent")
     if not parent_id:
         parent_id = -1
@@ -181,19 +197,24 @@ def post_form():
 @app.route("/post", methods=["POST"])
 @login_required
 def post():
+    """
+    This is the route for posting stories. Once the story has been posted
+    the user will be redirected to a page to view the new story.
+    TODO - Handle case where the user changes userid value in the
+    url to non-integer.
+    TODO - Add addtags function to parse taglist into database objects
+    """
     parent = flask.request.args.get("parent")
-    # TODO: Handle case where user changes this value in URL to non-integer.
     userid = current_user.id
     text = flask.request.form.get("text")
     title = flask.request.form.get("title")
-    taglist = flask.request.form.get("tags")
+    # taglist = flask.request.form.get("tags")
     new_story = Story(
         parent=parent,
         userid=userid,
         text=text,
         title=title,
     )
-    # TODO: Add addtags function to parse taglist into database objects
     db.session.add(new_story)
     db.session.commit()
     return flask.redirect("/story?story_id=" + str(new_story.id))
@@ -202,6 +223,10 @@ def post():
 @app.route("/orphan", methods=["POST"])
 @login_required
 def orphan():
+    """
+    This is the app route so that users can remove their assosiated
+    with previously written stories.
+    """
     storyid = flask.request.form.get("id")
     story_obj = Story.query.filter_by(id=storyid).first()
     story_obj.userid = None
