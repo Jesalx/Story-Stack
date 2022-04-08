@@ -174,8 +174,20 @@ def story():
         story_id = 0
     story_id = parse_id(story_id)
     curr_story = Story.query.filter_by(id=story_id).first()
+
     if curr_story:
-        return flask.render_template("story.html", story=curr_story)
+        original_poster = Account.query.filter_by(id=curr_story.userid).first()
+        poster_name = "Anonymous Poster"
+        if original_poster:
+            poster_name = original_poster.username
+
+        return flask.render_template(
+            "story.html",
+            poster_name=poster_name,
+            title=curr_story.title,
+            text=curr_story.text,
+            story_id=curr_story.id,
+        )
 
     return flask.render_template("story.html")
 
