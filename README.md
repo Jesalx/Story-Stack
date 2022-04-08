@@ -1,10 +1,10 @@
 # Story Stack
 
+[Heroku Deployment Link](https://story-stack-gsu.herokuapp.com/)
+
 This project's aim is to deliver a collaborative story building web application. One of the primary goals of our is to create an experience similar to the ["exquisite corpse" concept](https://en.wikipedia.org/wiki/Exquisite_corpse) where collaboration is the focus.
 
 The web app is built using [Flask](https://flask.palletsprojects.com/) in the backend, HTML/JS in the frontend, [PostgreSQL](https://www.postgresql.org/) for the database, [Flask-Login](https://flask-login.readthedocs.io/en/latest/) for authentication, and [Heroku](https://www.heroku.com/) for deployment.
-
-[Heroku Deployment Link](https://story-stack-gsu.herokuapp.com/)
 
 ## Installation Instructions
 
