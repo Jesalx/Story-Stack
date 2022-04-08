@@ -44,6 +44,8 @@ def load_user(user_id):  # pylint: disable=missing-function-docstring
 
 @app.route("/")
 def main():
+    if current_user.is_authenticated:
+        return flask.redirect(flask.url_for("homepage"))
     return flask.render_template("index.html")
 
 
@@ -194,7 +196,6 @@ def post():
     # TODO: Add addtags function to parse taglist into database objects
     db.session.add(new_story)
     db.session.commit()
-    # TODO: This should redirect to the story page
     return flask.redirect("/story?story_id=" + str(new_story.id))
 
 
@@ -202,10 +203,10 @@ def post():
 @login_required
 def orphan():
     storyid = flask.request.form.get("id")
-    story = Story.query.filter_by(id=storyid).first()
-    story.userid = None
+    story_obj = Story.query.filter_by(id=storyid).first()
+    story_obj.userid = None
     db.session.commit()
-    return flask.redirect()
+    return flask.redirect("/")
 
 
 app.run(
