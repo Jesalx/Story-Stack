@@ -15,6 +15,7 @@ from flask_login import (
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import find_dotenv, load_dotenv
 from models import db, Account, Comment, Like, Tag, Story
+from story import parse_id
 
 load_dotenv(find_dotenv())
 app = flask.Flask(__name__)
@@ -44,6 +45,7 @@ def load_user(user_id):  # pylint: disable=missing-function-docstring
 @app.route("/")
 def main():
     return flask.render_template("index.html")
+
 
 @app.route("/home")
 def homepage():
@@ -152,6 +154,19 @@ def profile():
     return flask.render_template("profile.html")
 
 
+@app.route("/story", methods=["GET"])
+def story():
+    story_id = flask.request.args.get("story_id")
+    if not story_id:
+        story_id = 0
+    story_id = parse_id(story_id)
+    curr_story = Story.query.filter_by(id=story_id).first()
+    if curr_story:
+        return flask.render_template("story.html", story=curr_story)
+
+    return flask.render_template("story.html")
+
+
 @app.route("/post", methods=["GET"])
 @login_required
 def post_form():
@@ -180,7 +195,7 @@ def post():
     db.session.add(new_story)
     db.session.commit()
     # TODO: This should redirect to the story page
-    return flask.render_template("index.html")
+    return flask.redirect("/story?story_id=" + str(new_story.id))
 
 
 @app.route("/orphan", methods=["POST"])
