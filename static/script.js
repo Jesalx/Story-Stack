@@ -1,98 +1,102 @@
+/* eslint-disable no-unused-vars */
 function validLogin(email, password) {
-    err_msg = "";
-    if (email.length === 0 || password.length === 0) {
-        err_msg = "Please fill in all fields.";
-        return err_msg;
-    }
-    return err_msg
+  let errMsg = '';
+  if (email.length === 0 || password.length === 0) {
+    errMsg = 'Please fill in all fields.';
+    return errMsg;
+  }
+  return errMsg;
 }
 
 function meetsLoginConditions() {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-    let err_msg = document.getElementById("messages");
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const errMsg = document.getElementById('messages');
 
-    error = validLogin(email, password);
+  const error = validLogin(email, password);
 
-    if (error === "") {
-        return true
-    } else {
-        err_msg.innerText = error;
-        return false;
-    }
+  if (error === '') {
+    errMsg.innerText = '';
+    return true;
+  }
+
+  errMsg.innerText = error;
+  return false;
 }
 
 function validSignup(email, username, password, repassword) {
-    err_msg = "";
-    if (email.length === 0 || username.length === 0 || password.length === 0 || repassword.length === 0) {
-        err_msg = "Please fill in all fields.";
-        return err_msg;
-    }
+  let errMsg = '';
+  if (email.length === 0 || username.length === 0
+    || password.length === 0 || repassword.length === 0) {
+    errMsg = 'Please fill in all fields.';
+    return errMsg;
+  }
 
-    // How to use regular expressions in Javascript from:
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
-    const email_re = /^[0-9a-zA-Z]+\.?[0-9a-zA-Z]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
-    if (!email.match(email_re)) {
-        err_msg = "Please provie a valid email.";
-        return err_msg;
-    }
+  // How to use regular expressions in Javascript from:
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+  const emailRe = /^[0-9a-zA-Z]+\.?[0-9a-zA-Z]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/;
+  if (!email.match(emailRe)) {
+    errMsg = 'Please provie a valid email.';
+    return errMsg;
+  }
 
-    const username_re = /^[0-9a-zA-Z]+$/;
-    if (!username.match(username_re)) {
-        err_msg = "Username may only contain alphanumeric characters.";
-        return err_msg;
-    }
+  const usernameRe = /^[0-9a-zA-Z]+$/;
+  if (!username.match(usernameRe)) {
+    errMsg = 'Username may only contain alphanumeric characters.';
+    return errMsg;
+  }
 
-    const password_re = /^[0-9a-zA-Z!@#$]+$/
-    if (!password.match(password_re)) {
-        err_msg = "Password may only contain alphanumeric characters and !, @, #, $";
-        return err_msg;
-    }
+  const passwordRe = /^[0-9a-zA-Z!@#$]+$/;
+  if (!password.match(passwordRe)) {
+    errMsg = 'Password may only contain alphanumeric characters and !, @, #, $';
+    return errMsg;
+  }
 
-    if (username.length > 32) {
-        err_msg = "Username must be 32 or less characters.";
-        return err_msg;
-    }
+  if (username.length > 32) {
+    errMsg = 'Username must be 32 or less characters.';
+    return errMsg;
+  }
 
-    if (password.length <= 4) {
-        err_msg = "Password must be 5 or more characters.";
-        return err_msg;
-    }
+  if (password.length <= 4) {
+    errMsg = 'Password must be 5 or more characters.';
+    return errMsg;
+  }
 
-    if (password.length > 128) {
-        err_msg = "Password must be 128 or less characters.";
-        return err_msg;
-    }
+  if (password.length > 128) {
+    errMsg = 'Password must be 128 or less characters.';
+    return errMsg;
+  }
 
-    if (password !== repassword) {
-        err_msg = "Passwords must match.";
-        return err_msg;
-    }
+  if (password !== repassword) {
+    errMsg = 'Passwords must match.';
+    return errMsg;
+  }
 
-    if (username === password) {
-        err_msg = "Username and password must not match.";
-        return err_msg;
-    }
+  if (username === password) {
+    errMsg = 'Username and password must not match.';
+    return errMsg;
+  }
 
-    return err_msg;
+  return errMsg;
 }
 
 function meetsSignupConditions() {
-    let email = document.getElementById("email").value;
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-    let repassword = document.getElementById("repassword").value;
-    let err_msg = document.getElementById("messages");
+  const email = document.getElementById('email').value;
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const repassword = document.getElementById('repassword').value;
+  const errMsg = document.getElementById('messages');
 
-    error = validSignup(email, username, password, repassword);
+  const error = validSignup(email, username, password, repassword);
 
-    if (error === "") {
-        return true
-    } else {
-        err_msg.innerText = error;
-        return false;
-    }
+  if (error === '') {
+    errMsg.innerText = '';
+    return true;
+  }
+
+  errMsg.innerText = error;
+  return false;
 }
 
-module.exports.validLogin = validLogin
-module.exports.validSignup = validSignup
+module.exports.validLogin = validLogin;
+module.exports.validSignup = validSignup;
