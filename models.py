@@ -93,7 +93,7 @@ class Story(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     parent = db.Column(db.Integer, unique=False, nullable=True)
     userid = db.Column(db.Integer, unique=False, nullable=True)
-    text = db.Column(db.String(128), unique=False, nullable=False)
+    text = db.Column(db.String(2048), unique=False, nullable=False)
     date_posted = db.Column(db.Date, default=get_date, unique=False, nullable=False)
     date_updated = db.Column(db.Date, onupdate=get_date, unique=False, nullable=True)
     title = db.Column(db.String(32), unique=False, nullable=True)
