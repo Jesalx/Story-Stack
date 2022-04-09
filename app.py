@@ -6,6 +6,7 @@ Story Stack - Main flask app
 # pylint: disable=unused-import
 import os
 import flask
+import re
 from flask_login import (
     LoginManager,
     login_user,
@@ -16,7 +17,8 @@ from flask_login import (
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import find_dotenv, load_dotenv
 from models import db, Account, Comment, Like, Tag, Story
-from story import parse_id
+from story import post_story, parse_id
+
 
 load_dotenv(find_dotenv())
 app = flask.Flask(__name__)
@@ -30,7 +32,8 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 db.init_app(app)
 with app.app_context():
-    db.create_all()
+    if __name__ == "__main__":
+        db.create_all()
 
 login_manager = LoginManager()
 login_manager.login_view = "/login"
@@ -96,11 +99,7 @@ def signup_post():
         flask.flash("Username already exists.")
         return flask.redirect("/signup")
 
-    new_user = Account(
-        email=email,
-        username=username,
-        password=generate_password_hash(password, method="sha256"),
-    )
+    new_user = create_user(email, username, password)
 
     db.session.add(new_user)
     db.session.commit()
@@ -227,8 +226,7 @@ def post():
         text=text,
         title=title,
     )
-    db.session.add(new_story)
-    db.session.commit()
+    post_story(new_story)
     return flask.redirect("/story?story_id=" + str(new_story.id))
 
 
@@ -246,8 +244,22 @@ def orphan():
     return flask.redirect("/")
 
 
-app.run(
-    host=os.getenv("IP", "0.0.0.0"),
-    port=int(os.getenv("PORT", 8080)),  # pylint: disable=invalid-envvar-default
-    debug=True,
-)
+
+def create_user(email, username, password):
+    regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+    if (not (email and username and password)) or (not re.fullmatch(regex, email)):
+        return False
+    new_user = new_user = Account(
+        email=email,
+        username=username,
+        password=generate_password_hash(password, method="sha256"),
+    )
+    return new_user
+
+
+if __name__ == "__main__":
+    app.run(
+        host=os.getenv("IP", "0.0.0.0"),
+        port=int(os.getenv("PORT", 8080)),  # pylint: disable=invalid-envvar-default
+        debug=True,
+    )

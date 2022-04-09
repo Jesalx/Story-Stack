@@ -1,6 +1,9 @@
 """
 Module containing backend functions for the processing of stories.
 """
+from models import db, Account
+from werkzeug.security import generate_password_hash
+import re
 
 
 def extract_tags(input_string: str) -> set:
@@ -17,7 +20,23 @@ def extract_tags(input_string: str) -> set:
 
     return tags
 
+  
+def add_user(user):
+    if not (user.email and user.username and user.password):
+        return False
+    db.session.add(user)
+    db.session.commit()
+    return True
 
+
+def post_story(story):
+    if not (story.parent and story.title and story.text and story.userid):
+        return False
+    db.session.add(story)
+    db.session.commit()
+    return True
+
+  
 def parse_id(id_str: str) -> int:
     """
     Takes a string and returns the integer in s, or 0 if s is not an integer
