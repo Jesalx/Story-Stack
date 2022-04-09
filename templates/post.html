@@ -1,10 +1,15 @@
 <html>
 
-    <head>
-        <link rel="stylesheet" href="" />
-    </head>
+<head>
+    <title>Post a story</title>
+    <link rel="stylesheet" href="/static/post.css" />
+</head>
 
-    <body>
+<body>
+    
+    <div class="content">
+        <img src="static/logo2.png" class="logo">
+        <h1>Create a story</h1>
         <form method="POST" action="/post?parent={{parent_id}}">
             <input class="title_field" id="title" type="text" name="title" placeholder="Title">
             <br>
@@ -15,7 +20,8 @@
             <input class="post_submit" id="submit_button" type="submit" value="Submit Post">
 
         </form>
+    </div>
 
-    </body>
+</body>
 
 </html>

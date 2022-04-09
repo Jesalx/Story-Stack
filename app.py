@@ -3,6 +3,7 @@ Story Stack - Main flask app
 """
 
 # pylint: disable=no-member
+# pylint: disable=unused-import
 import os
 import flask
 import re
@@ -16,7 +17,7 @@ from flask_login import (
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import find_dotenv, load_dotenv
 from models import db, Account, Comment, Like, Tag, Story
-from story import post_story
+from story import post_story, parse_id
 
 
 load_dotenv(find_dotenv())
@@ -47,11 +48,20 @@ def load_user(user_id):  # pylint: disable=missing-function-docstring
 
 @app.route("/")
 def main():
+    """
+    App route for users that aren't currently logged in.
+    """
+    if current_user.is_authenticated:
+        return flask.redirect(flask.url_for("homepage"))
     return flask.render_template("index.html")
 
 
 @app.route("/home")
 def homepage():
+    """
+    App route for the homepage of the application where users
+    can access the application's functionality.
+    """
     return flask.render_template("home.html")
 
 
@@ -136,10 +146,10 @@ def login_post():
 @login_required
 def logout():
     """
-    This route logs out the user and redirects them to the login page.
+    This route logs out the user and redirects them to index page.
     """
     logout_user()
-    return flask.redirect("/login")
+    return flask.redirect("/")
 
 
 @app.route("/profile", methods=["GET"])
@@ -153,9 +163,42 @@ def profile():
     return flask.render_template("profile.html")
 
 
+@app.route("/story", methods=["GET"])
+def story():
+    """
+    This route is the route to view a single story page.
+    """
+    story_id = flask.request.args.get("story_id")
+    if not story_id:
+        story_id = 0
+    story_id = parse_id(story_id)
+    curr_story = Story.query.filter_by(id=story_id).first()
+
+    if curr_story:
+        original_poster = Account.query.filter_by(id=curr_story.userid).first()
+        poster_name = "Anonymous Poster"
+        if original_poster:
+            poster_name = original_poster.username
+
+        return flask.render_template(
+            "story.html",
+            poster_name=poster_name,
+            title=curr_story.title,
+            text=curr_story.text,
+            story_id=curr_story.id,
+        )
+
+    return flask.render_template("story.html")
+
+
 @app.route("/post", methods=["GET"])
 @login_required
 def post_form():
+    """
+    This route is for the posting page of stories. The parent of the story
+    being written is a parameter in the URL. If there is no parent story then
+    the default id is currently -1 for root stories.
+    """
     parent_id = flask.request.args.get("parent")
     if not parent_id:
         parent_id = -1
@@ -165,32 +208,41 @@ def post_form():
 @app.route("/post", methods=["POST"])
 @login_required
 def post():
+    """
+    This is the route for posting stories. Once the story has been posted
+    the user will be redirected to a page to view the new story.
+    TODO - Handle case where the user changes userid value in the
+    url to non-integer.
+    TODO - Add addtags function to parse taglist into database objects
+    """
     parent = flask.request.args.get("parent")
-    # TODO: Handle case where user changes this value in URL to non-integer.
     userid = current_user.id
     text = flask.request.form.get("text")
     title = flask.request.form.get("title")
-    taglist = flask.request.form.get("tags")
+    # taglist = flask.request.form.get("tags")
     new_story = Story(
         parent=parent,
         userid=userid,
         text=text,
         title=title,
     )
-    # TODO: Add addtags function to parse taglist into database objects
     post_story(new_story)
-    # TODO: This should redirect to the story page
-    return flask.render_template("index.html")
+    return flask.redirect("/story?story_id=" + str(new_story.id))
 
 
 @app.route("/orphan", methods=["POST"])
 @login_required
 def orphan():
+    """
+    This is the app route so that users can remove their assosiated
+    with previously written stories.
+    """
     storyid = flask.request.form.get("id")
-    story = Story.query.filter_by(id=storyid).first()
-    story.userid = None
+    story_obj = Story.query.filter_by(id=storyid).first()
+    story_obj.userid = None
     db.session.commit()
-    return flask.redirect()
+    return flask.redirect("/")
+
 
 
 def create_user(email, username, password):

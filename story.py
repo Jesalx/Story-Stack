@@ -1,5 +1,5 @@
 """
-File containing backend functions for the processing of stories.
+Module containing backend functions for the processing of stories.
 """
 from models import db, Account
 from werkzeug.security import generate_password_hash
@@ -20,7 +20,7 @@ def extract_tags(input_string: str) -> set:
 
     return tags
 
-
+  
 def add_user(user):
     if not (user.email and user.username and user.password):
         return False
@@ -35,3 +35,14 @@ def post_story(story):
     db.session.add(story)
     db.session.commit()
     return True
+
+  
+def parse_id(id_str: str) -> int:
+    """
+    Takes a string and returns the integer in s, or 0 if s is not an integer
+    or below 0.
+    """
+    try:
+        return max(int(id_str), 0)
+    except ValueError:
+        return 0
