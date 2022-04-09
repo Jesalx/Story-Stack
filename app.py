@@ -244,12 +244,11 @@ def orphan():
     return flask.redirect("/")
 
 
-
 def create_user(email, username, password):
-    regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+    regex = r"^[0-9a-zA-Z]+\.?[0-9a-zA-Z]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
     if (not (email and username and password)) or (not re.fullmatch(regex, email)):
         return False
-    new_user = new_user = Account(
+    new_user = Account(
         email=email,
         username=username,
         password=generate_password_hash(password, method="sha256"),
