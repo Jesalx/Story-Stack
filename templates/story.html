@@ -1,18 +1,31 @@
 <html>
 
-    <head>
-    </head>
+<head>
+    <title>Story Stack</title>
+    <link rel="stylesheet" href="/static/story.css" />
+</head>
 
-    <body>
+<body>
 
-        Original Poster: {{poster_name}}
-        </br>
-        {{title}}
-        </br>
-        {{text}}
-        </br>
-        <button onclick="window.location.href='post?parent={{story_id}}'">Branch</button>
+    <div class="content">
+        <img src="static/logo2.png" class="logo">
+        <h1>Original Poster:</h1>
+        <div class="poster_name">
+            {{poster_name}}
+        </div>
+        <br>
 
-    </body>
+        <div class="title">
+            {{title}}
+        </div>
+        <br>
+
+        <div class="text">
+            {{text}}
+        </div>
+        <br>
+        <button class="botton" onclick="window.location.href='post?parent={{story_id}}'">Branch</button>
+    </div>
+</body>
 
 </html>
