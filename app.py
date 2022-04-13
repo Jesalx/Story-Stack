@@ -18,6 +18,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import find_dotenv, load_dotenv
 from models import db, Account, Comment, Like, Tag, Story
 from story import post_story, parse_id, extract_tags, add_tags
+from search import search_db
 
 
 load_dotenv(find_dotenv())
@@ -244,6 +245,28 @@ def orphan():
     story_obj.userid = None
     db.session.commit()
     return flask.redirect("/")
+
+
+@app.route("/search", methods=["GET"])
+@login_required
+def search_get():
+    query = flask.request.args.get("query")
+    matching_stories = search_db(query)
+    story_items = []
+    for found_story in matching_stories:
+        story_dict = {}
+        story_dict["id"] = found_story.id
+
+        story_dict["poster"] = "Anonymous"
+        original_poster = Account.query.filter_by(id=found_story.userid).first()
+        if original_poster:
+            story_dict["poster"] = original_poster.username
+
+        story_dict["title"] = found_story.title
+        story_dict["text"] = found_story.text
+        story_items.append(story_dict)
+
+    return flask.render_template("search.html", query=query, stories=story_items)
 
 
 def create_user(email, username, password):
