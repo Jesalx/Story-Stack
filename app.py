@@ -5,8 +5,8 @@ Story Stack - Main flask app
 # pylint: disable=no-member
 # pylint: disable=unused-import
 import os
-import flask
 import re
+import flask
 from flask_login import (
     LoginManager,
     login_user,
@@ -17,7 +17,14 @@ from flask_login import (
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import find_dotenv, load_dotenv
 from models import db, Account, Comment, Like, Tag, Story
-from story import post_story, parse_id, extract_tags, add_tags
+from story import (
+    post_story,
+    parse_id,
+    extract_tags,
+    add_tags,
+    get_displayable_stories,
+    get_poster_username,
+)
 from search import search_db
 
 
@@ -176,14 +183,9 @@ def story():
     curr_story = Story.query.filter_by(id=story_id).first()
 
     if curr_story:
-        original_poster = Account.query.filter_by(id=curr_story.userid).first()
-        poster_name = "Anonymous Poster"
-        if original_poster:
-            poster_name = original_poster.username
-
         return flask.render_template(
             "story.html",
-            poster_name=poster_name,
+            poster_name=get_poster_username(curr_story),
             title=curr_story.title,
             text=curr_story.text,
             story_id=curr_story.id,
@@ -212,9 +214,6 @@ def post():
     """
     This is the route for posting stories. Once the story has been posted
     the user will be redirected to a page to view the new story.
-    TODO - Handle case where the user changes userid value in the
-    url to non-integer.
-    TODO - Add addtags function to parse taglist into database objects
     """
     parent = flask.request.args.get("parent")
     userid = current_user.id
@@ -250,23 +249,16 @@ def orphan():
 @app.route("/search", methods=["GET"])
 @login_required
 def search_get():
+    """
+    This is the app route for the search page. The user can currently
+    pass a query that will be used to search for stories that match either
+    a stories tag or id.
+    """
     query = flask.request.args.get("query")
     matching_stories = search_db(query)
-    story_items = []
-    for found_story in matching_stories:
-        story_dict = {}
-        story_dict["id"] = found_story.id
+    stories = get_displayable_stories(matching_stories)
 
-        story_dict["poster"] = "Anonymous"
-        original_poster = Account.query.filter_by(id=found_story.userid).first()
-        if original_poster:
-            story_dict["poster"] = original_poster.username
-
-        story_dict["title"] = found_story.title
-        story_dict["text"] = found_story.text
-        story_items.append(story_dict)
-
-    return flask.render_template("search.html", query=query, stories=story_items)
+    return flask.render_template("search.html", query=query, stories=stories)
 
 
 def create_user(email, username, password):
