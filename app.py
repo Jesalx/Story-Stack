@@ -17,7 +17,7 @@ from flask_login import (
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import find_dotenv, load_dotenv
 from models import db, Account, Comment, Like, Tag, Story
-from story import post_story, parse_id
+from story import post_story, parse_id, extract_tags, add_tags
 
 
 load_dotenv(find_dotenv())
@@ -219,14 +219,16 @@ def post():
     userid = current_user.id
     text = flask.request.form.get("text")
     title = flask.request.form.get("title")
-    # taglist = flask.request.form.get("tags")
+    tags = extract_tags(flask.request.form.get("tags"))
     new_story = Story(
         parent=parent,
         userid=userid,
         text=text,
         title=title,
     )
-    post_story(new_story)
+    if post_story(new_story):
+        add_tags(new_story, tags)
+
     return flask.redirect("/story?story_id=" + str(new_story.id))
 
 
