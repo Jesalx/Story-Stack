@@ -12,18 +12,25 @@ def search_db(query: str) -> list:
     matching_stories = set()
 
     for token in tokens:
-        # First, we'll search the tags for this token and add
-        # the stories related to that tag
+        # Searching tags
         tag_obj = Tag.query.filter_by(name=token).first()
         if tag_obj:
             for story in tag_obj.stories:
                 matching_stories.add(story)
 
+        # Searching story ids
         story_id = parse_id(token)
         if story_id != 0:
             story_obj = Story.query.filter_by(id=story_id).first()
             if story_obj:
                 matching_stories.add(story_obj)
+
+        # Searching usernames
+        account_obj = Account.query.filter_by(username=token).first()
+        if account_obj:
+            user_stories = Story.query.filter_by(userid=account_obj.id).all()
+            for story in user_stories:
+                matching_stories.add(story)
 
     return list(matching_stories)
 
