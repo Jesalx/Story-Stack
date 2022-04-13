@@ -85,7 +85,9 @@ class Tag(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(1028), unique=False, nullable=False)
-    stories = db.relationship("Story", secondary=tag_story_helper, backref="Tag")
+    stories = db.relationship(
+        "Story", secondary=tag_story_helper, back_populates="tags"
+    )
 
     def __repr__(self):
         return f"Tag {self.name}"
@@ -102,7 +104,7 @@ class Story(db.Model):
     userid = db.Column(db.Integer, unique=False, nullable=True)
     title = db.Column(db.String(32), unique=False, nullable=True)
     text = db.Column(db.String(2048), unique=False, nullable=False)
-    tags = db.relationship("Tag", secondary=tag_story_helper, backref="Story")
+    tags = db.relationship("Tag", secondary=tag_story_helper, back_populates="stories")
     date_posted = db.Column(db.Date, default=get_date, unique=False, nullable=False)
     date_updated = db.Column(db.Date, onupdate=get_date, unique=False, nullable=True)
 

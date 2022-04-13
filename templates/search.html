@@ -1,0 +1,19 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" href="/static/style.css" />
+    </head>
+
+    <body>
+        query: {{query}} </br>
+
+        {% for story in stories %}
+        </br>
+        Id: {{story["id"]}}</br>
+        Poster: {{story["poster"]}}</br>
+        Title: {{story["title"]}}</br>
+        Text: {{story["text"]}}</br>
+        {% endfor %}
+    </body>
+
+</html>
