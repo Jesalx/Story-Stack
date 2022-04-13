@@ -1,6 +1,7 @@
 # Story Stack
 
 [Sprint 1 Deployment](https://story-stack-gsu.herokuapp.com/)
+
 [Sprint 2 Deployment](https://gsu-story-stack.herokuapp.com)
 
 This project's aim is to deliver a collaborative story building web application. One of the primary goals of our is to create an experience similar to the ["exquisite corpse" concept](https://en.wikipedia.org/wiki/Exquisite_corpse) where collaboration is the focus.
