@@ -41,6 +41,36 @@ def add_tags(story, tags):
     db.session.commit()
 
 
+def get_poster_username(story: Story) -> str:
+    """
+    Takes a story and returns a string of the username of the user who
+    wrote the story unless the story is orphaned, in which case it returns
+    'Anonymous'.
+    """
+    original_poster = Account.query.filter_by(id=story.userid).first()
+    if original_poster:
+        return original_poster.username
+    return "Anonymous"
+
+
+def get_displayable_stories(stories: list[Story]) -> list[dict]:
+    """
+    Take a list of stories from the Story model and returns a list of those
+    story objects, but represented in dict form so that they are easier to
+    display with Jinja templates.
+    """
+    results = []
+    for story_obj in stories:
+        story_dict = {}
+        story_dict["id"] = story_obj.id
+        story_dict["poster"] = get_poster_username(story_obj)
+        story_dict["title"] = story_obj.title
+        story_dict["text"] = story_obj.text
+        story_dict["creation_date"] = story_obj.date_posted
+        results.append(story_dict)
+    return results
+
+
 def add_user(user):
     if not (user.email and user.username and user.password):
         return False
