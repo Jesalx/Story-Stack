@@ -68,20 +68,27 @@ class Like(db.Model):
         return f"Like {self.userid} {self.storyid}"
 
 
+tag_story_helper = db.Table(
+    "tag_story_helper",
+    db.Column("id", db.Integer, primary_key=True),
+    db.Column("tag_id", db.Integer, db.ForeignKey("tag.id")),
+    db.Column("story_id", db.Integer, db.ForeignKey("story.id")),
+)
+
+
 class Tag(db.Model):
     """
-    A Class containign the tags for a post. The user creates the tags
+    A Class containing the tags for a post. The user creates the tags
     when creating a story. Tags are meant to be used for exploring
     categories of stories that interest a user.
     """
 
     id = db.Column(db.Integer, primary_key=True)
-    userid = db.Column(db.Integer, unique=False, nullable=False)
-    storyid = db.Column(db.Integer, unique=False, nullable=False)
-    text = db.Column(db.String(128), unique=False, nullable=False)
+    name = db.Column(db.String(1028), unique=False, nullable=False)
+    stories = db.relationship("Story", secondary=tag_story_helper, backref="Tag")
 
     def __repr__(self):
-        return f"Tag {self.text}"
+        return f"Tag {self.name}"
 
 
 class Story(db.Model):
@@ -93,10 +100,11 @@ class Story(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     parent = db.Column(db.Integer, unique=False, nullable=True)
     userid = db.Column(db.Integer, unique=False, nullable=True)
+    title = db.Column(db.String(32), unique=False, nullable=True)
     text = db.Column(db.String(2048), unique=False, nullable=False)
+    tags = db.relationship("Tag", secondary=tag_story_helper, backref="Story")
     date_posted = db.Column(db.Date, default=get_date, unique=False, nullable=False)
     date_updated = db.Column(db.Date, onupdate=get_date, unique=False, nullable=True)
-    title = db.Column(db.String(32), unique=False, nullable=True)
 
     def __repr__(self):
-        return f"User {self.text}"
+        return f"Story {self.text}"
