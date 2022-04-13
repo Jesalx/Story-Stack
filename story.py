@@ -53,7 +53,7 @@ def get_poster_username(story: Story) -> str:
     return "Anonymous"
 
 
-def get_displayable_stories(stories: list[Story]) -> list[dict]:
+def get_displayable_stories(stories: list) -> list:
     """
     Take a list of stories from the Story model and returns a list of those
     story objects, but represented in dict form so that they are easier to
