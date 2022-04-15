@@ -1,31 +1,97 @@
 <html>
 
 <head>
-    <title>Story Stack</title>
+    <title>Story</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="/static/story.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 
 <body>
-
-    <div class="content">
-        <img src="static/logo2.png" class="logo">
-        <h1>Original Poster:</h1>
-        <div class="poster_name">
-            {{poster_name}}
+    <nav>
+        <div class="nav-left">
+            <img src="static/logo2.png" class="logo">
         </div>
-        <br>
+        <div class="nav-right">
+            <div class="search-box">
+                <img src="/static/search.png">
+                <form method="GET" action="/search">
+                    <input type="text" name="query" placeholder="Search for stories...">
+                </form>
+            </div>
 
-        <div class="title">
-            {{title}}
-        </div>
-        <br>
+            <div class="content">
+                <ul>
+                    <li> <a href="{{url_for('post')}}"> Create </a></li>
+                    <li> <a href="{{url_for('logout')}}"> LogOut </a></li>
+                </ul>
+            </div>
 
-        <div class="text">
-            {{text}}
         </div>
-        <br>
-        <button class="botton" onclick="window.location.href='post?parent={{story_id}}'">Branch</button>
+    </nav>
+
+    <div class="container">
+        <div class="left-sidebar">
+
+            <a class="menu-item active">
+                <span> <i class="uil uil-home"> </i></span>
+                <h3>Home</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-compass"></i></span>
+                <h3>Explore</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-bell"></i> </span>
+                <h3>Notifications</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-bookmark"></i> </span>
+                <h3>Bookmarks</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-setting"></i> </span>
+                <h3>Settings</h3>
+            </a>
+            <div class="button">
+                <a href="{{ url_for('post') }}" class="btn"> Create Post</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="post">
+                <div class="post__avatar">
+                    <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
+                </div>
+                <div class="post_body">
+                    <div class="poster_name">
+                        {{poster_name}}
+                    </div>
+                    <br>
+
+                    <div class="title">
+                        {{title}}
+                    </div>
+                    <br>
+
+                    <div class="post_content">
+                        {{text}}
+
+                    </div>
+                    <br>
+                    <button class="botton" onclick="window.location.href='post?parent={{story_id}}'">Branch</button>
+                    <div class="post__footer">
+                        <span class="material-icons"> repeat </span>
+                        <span class="material-icons"> favorite_border </span>
+                        <span class="material-icons"> publish </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-sidebar"></div>
     </div>
+
 </body>
 
 </html>
