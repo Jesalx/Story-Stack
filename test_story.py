@@ -58,7 +58,7 @@ class ExtractTagsTests(unittest.TestCase):
 
 class ParseIdTests(unittest.TestCase):
     """
-    This Class contains tests for the extract_tags function of story.py
+    This Class contains tests for the parse_id function of story.py
     """
 
     def test_regular_string(self):
