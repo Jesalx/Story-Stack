@@ -1,27 +1,27 @@
 <html>
 
-<head>
-    <title>Post a story</title>
-    <link rel="stylesheet" href="/static/post.css" />
-</head>
+    <head>
+        <title>Post a story</title>
+        <link rel="stylesheet" href="/static/post.css" />
+    </head>
 
-<body>
-    
-    <div class="content">
-        <img src="static/logo2.png" class="logo">
-        <h1>Create a story</h1>
-        <form method="POST" action="/post?parent={{parent_id}}">
-            <input class="title_field" id="title" type="text" name="title" placeholder="Title">
-            <br>
-            <input class="text_field" id="text" type="text" name="text" placeholder="Placeholder. story here.">
-            <br>
-            <input class="tags_field" id="tags" type="text" name="tags" placeholder="Placeholder. tags here.">
-            <br>
-            <input class="post_submit" id="submit_button" type="submit" value="Submit Post">
+    <body>
 
-        </form>
-    </div>
+        <div class="content">
+            <img src="static/logo2.png" class="logo">
+            <h1>Create a story</h1>
+            <form method="POST" action="/post?parent={{parent_id}}">
+                <input class="title_field" id="title" type="text" name="title" placeholder="Title">
+                <br>
+                <input class="text_field" id="text" type="text" name="text" placeholder="Placeholder. story here.">
+                <br>
+                <input class="tags_field" id="tags" type="text" name="tags" placeholder="Enter space separated tags.">
+                <br>
+                <input class="post_submit" id="submit_button" type="submit" value="Submit Post">
 
-</body>
+            </form>
+        </div>
+
+    </body>
 
 </html>

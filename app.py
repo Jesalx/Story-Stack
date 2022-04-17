@@ -20,12 +20,11 @@ from models import db, Account, Comment, Like, Tag, Story
 from story import (
     post_story,
     parse_id,
-    extract_tags,
     add_tags,
     get_displayable_stories,
     get_poster_username,
 )
-from search import search_db
+from search import search_db, get_query_tokens
 
 
 load_dotenv(find_dotenv())
@@ -219,7 +218,7 @@ def post():
     userid = current_user.id
     text = flask.request.form.get("text")
     title = flask.request.form.get("title")
-    tags = extract_tags(flask.request.form.get("tags"))
+    tags = get_query_tokens(flask.request.form.get("tags"))
     new_story = Story(
         parent=parent,
         userid=userid,

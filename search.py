@@ -35,7 +35,7 @@ def search_db(query: str) -> list:
     return list(matching_stories)
 
 
-def get_query_tokens(query: str) -> list:
+def get_query_tokens(query: str) -> set:
     """
     Takes a query string and returns a list of tokens.
     """
