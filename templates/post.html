@@ -7,79 +7,99 @@
     <link rel="stylesheet" href="/static/post.css" />
 </head>
 
-    <body>
-        <nav>
-            <div class="nav-left">
-                <img src="static/logo2.png" class="logo">
+<body>
+    <nav>
+        <div class="nav-left">
+            <img src="static/logo2.png" class="logo">
+        </div>
+        <div class="nav-right">
+            <div class="search-box">
+                <img src="/static/search.png">
+                <form method="GET" action="/search">
+                    <input type="text" name="query" placeholder="Search for stories...">
+                </form>
             </div>
-            <div class="nav-right">
-                <div class="search-box">
-                    <img src="/static/search.png">
-                    <form method="GET" action="/search">
-                        <input type="text" name="query" placeholder="Search for stories...">
+
+            <div class="content">
+                <ul>
+                    <li> <a href="{{url_for('post')}}"> Create </a></li>
+                    <li> <a href="{{url_for('logout')}}"> LogOut </a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="left-sidebar">
+
+            <a class="menu-item active">
+                <span> <i class="uil uil-home"> </i></span>
+                <h3>Home</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-compass"></i></span>
+                <h3>Explore</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-bell"></i> </span>
+                <h3>Notifications</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-bookmark"></i> </span>
+                <h3>Bookmarks</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-setting"></i> </span>
+                <h3>Settings</h3>
+            </a>
+            <div class="button">
+                <a href="{{ url_for('post') }}" class="btn"> Create Post</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="tweetBox">
+                <div class="post">
+                    <header>Create Post</header>
+                    <form method="POST" action="/post?parent={{parent_id}}">
+                        <textarea class="title" id="title" type="text" name="title" maxlength="32"
+                            onkeyup="countCharsTitle(this);" placeholder="Title. Less than 32 characters."></textarea>
+                        <p id="charNumTitle">0/32</p>
+                        <br>
+                        <textarea class="text_field" id="text" type="text" name="text" maxlength="2048"
+                            onkeyup="countCharsText(this);"
+                            placeholder="story here. Less than 2048 characters."></textarea>
+                        <p id="charNumText">0/2048</p>
+                        <br>
+                        <textarea class="tags" id="tags" type="text" name="tags"
+                            placeholder="tags here. Separated by commas."></textarea>
+                        <br>
+                        <input class="post_submit" id="submit_button" type="submit" value="Submit Post">
                     </form>
                 </div>
-    
-                <div class="content">
-                    <ul>
-                        <li> <a href="{{url_for('post')}}"> Create </a></li>
-                        <li> <a href="{{url_for('logout')}}"> LogOut </a></li>
-                    </ul>
-                </div>
-    
             </div>
-        </nav>
-    
-        <div class="container">
-    
-            <div class="left-sidebar">
-    
-                <a class="menu-item active">
-                    <span> <i class="uil uil-home"> </i></span>
-                    <h3>Home</h3>
-                </a>
-                <a class="menu-item">
-                    <span> <i class="uil uil-compass"></i></span>
-                    <h3>Explore</h3>
-                </a>
-                <a class="menu-item">
-                    <span> <i class="uil uil-bell"></i> </span>
-                    <h3>Notifications</h3>
-                </a>
-                <a class="menu-item">
-                    <span> <i class="uil uil-bookmark"></i> </span>
-                    <h3>Bookmarks</h3>
-                </a>
-                <a class="menu-item">
-                    <span> <i class="uil uil-setting"></i> </span>
-                    <h3>Settings</h3>
-                </a>
-                <div class="button">
-                    <a href="{{ url_for('post') }}" class="btn"> Create Post</a>
-                </div>
-            </div>
-    
-            <div class="main-content">
-                            <div class="tweetBox">
-                                <div class="post">
-                                    <header>Create Post</header>
-                                    <form method="POST" action="/post?parent={{parent_id}}">
-                                        <textarea class="title" id="title" type="text" name="title" maxlength="32"
-                                            placeholder="Title. Less than 32 characters."></textarea>
-                                        <br>
-                                        <textarea class="text_field" id="text" type="text" name="text" maxlength="2048"
-                                            placeholder="story here. Less than 2048 characters."></textarea>
-                                        <br>
-                                        <textarea class="tags" id="tags" type="text" name="tags"
-                                            placeholder="tags here. Separated by commas."></textarea>
-                                        <br>
-                                        <input class="post_submit" id="submit_button" type="submit" value="Submit Post">
-                                    </form>
-                                </div>
-                            </div>
-            </div>
-            <div class="right-sidebar"></div>
         </div>
-    </body>
+        <div class="right-sidebar"></div>
+    </div>
+
+    <script>
+
+        function countCharsTitle(obj) {
+            var maxLength = 32;
+            var strLength = obj.value.length;
+            document.getElementById("charNumTitle").innerHTML = strLength + '/' + maxLength;
+        }
+
+        function countCharsText(obj) {
+            var maxLength = 2048;
+            var strLength = obj.value.length;
+            document.getElementById("charNumText").innerHTML = strLength + '/' + maxLength;
+        }
+
+    </script>
+
+</body>
 
 </html>
