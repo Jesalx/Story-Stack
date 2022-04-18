@@ -98,7 +98,7 @@ nav{
 }
 
 .left-sidebar{
-    height: 50vh;
+    height: 40vh;
     flex-basis: 15%;
     position: sticky;
     top: 70px;

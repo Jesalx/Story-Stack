@@ -4,6 +4,7 @@
     <title>Story</title>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="/static/story.css" />
+    <link rel="stylesheet" href="/static/home.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 
@@ -42,10 +43,6 @@
                 <h3>Explore</h3>
             </a>
             <a class="menu-item">
-                <span> <i class="uil uil-bell"></i> </span>
-                <h3>Notifications</h3>
-            </a>
-            <a class="menu-item">
                 <span> <i class="uil uil-bookmark"></i> </span>
                 <h3>Bookmarks</h3>
             </a>
@@ -61,7 +58,7 @@
         <div class="main-content">
             <div class="post">
                 <div class="post__avatar">
-                    <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
+                    <img src="/static/user1.png" alt="" />
                 </div>
                 <div class="post_body">
                     <div class="poster_name">
@@ -79,7 +76,7 @@
 
                     </div>
                     <br>
-                    <button class="botton" onclick="window.location.href='post?parent={{story_id}}'">Branch</button>
+                    <button class="post_submit" onclick="window.location.href='post?parent={{story_id}}'">Branch</button>
                     <div class="post__footer">
                         <span class="material-icons"> repeat </span>
                         <span class="material-icons"> favorite_border </span>

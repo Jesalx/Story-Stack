@@ -1,184 +1,15 @@
-* {
-    margin: 0;
-    padding: 0;
-    font-family: monospace;
-}
-
-body {
-    background: #efefef;
-}
-
-nav {
-    height: 6vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 5%;
-    background-color: rgba(132, 77, 35, 0.8);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.logo {
-    width: 120px;
-    margin-left: -70px;
-}
-
-.nav-left, .nav-right {
-    display: flex;
-    align-items: center;
-}
-
-.search-box {
-    margin-right: 300px;
-    background: #efefef;
-    width: 450px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-}
-
-.search-box img {
-    width: 18px;
-}
-
-.search-box input {
-    text-align: center;
-    width: 100%;
-    background: transparent;
-    padding: 10px;
-    outline: none;
-    border: 0;
-}
-
-.content {
-    margin: auto;
-    width: 30%;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: -75px;
-}
-
-.content ul li {
-    list-style: none;
-    display: inline-block;
-    margin: 5 10px;
-    position: relative;
-}
-
-.content ul li a {
-    text-decoration: none;
-    color: #fff;
-    text-transform: uppercase;
-}
-
-.content ul li::after {
-    content: '';
-    height: 3px;
-    width: 0;
-    background: #844D23;
-    position: absolute;
-    left: 0;
-    bottom: -10;
-    transition: 0.5s;
-}
-
-.content ul li:hover::after {
-    width: 100%;
-}
-
-.container {
-    display: flex;
-    justify-content: space-between;
-    padding: 13px 5%;
-    column-count: 2;
-}
-
-.left-sidebar {
-    height: 50vh;
-    flex-basis: 15%;
-    position: sticky;
-    top: 70px;
-    align-self: flex-start;
-    border-radius: 15px;
-    background: rgba(132, 77, 35, 0.8);
-    color: white;
-    margin-left: -50px;
-    margin-top: 20px;
-
-}
-
-.left-sidebar .menu-item {
-    display: flex;
-    align-items: center;
-    height: 4rem;
-    cursor: pointer;
-    translate: all 300ms ease;
-    position: relative;
-    margin-top: 5px;
-    margin-left: 30px
-}
-
-.left-sidebar .menu-item:hover {
-    background: rgba(132, 77, 35);
-    width: 150px;
-    border-radius: 25px;
-}
-
-.left-sidebar .button {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.left-sidebar .btn {
-    text-decoration: none;
-    width: 200px;
-    padding: 10px 25px;
-    margin: 20px 10px;
-    border-radius: 25px;
-    font-weight: bold;
-    border: 2px solid #844D23;
-    background: transparent;
-    color: #fff;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: 0.6 ease;
-    background: #844D23;
-}
-
-
-.right-sidebar {
-    background: #cbdffa;
-    flex-basis: 25%;
-    position: sticky;
-    top: 70px;
-    align-self: flex-start;
-
-}
-
-
 .main-content {
     padding-top: 20px;
-    flex-basis: 47%;
-    border-right: 1px solid var(--twitter-background);
-    overflow-y: scroll;
-    width: 500px;
 }
 
 
 .post {
+    width: 750px;
     display: flex;
-    align-items: flex-start;
-    border-bottom: 1px solid var(--twitter-background);
+    background: #fff;
     padding-bottom: 10px;
-    border: solid lightblue;
-    border-radius: 7px;
-    height: 100%;
+    border: solid #844D23;
+    border-radius: 15px;
 }
 
 .post__avatar {
@@ -191,7 +22,6 @@ nav {
 }
 
 .post__body {
-    flex: 1;
     padding: 10px;
 }
 
@@ -208,7 +38,7 @@ nav {
 }
 
 .post_content {
-    width: 400px;
+    width: 600px;
     object-fit: contain;
     font-size: 18px;
     margin-bottom: 5px;
@@ -222,4 +52,17 @@ nav {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+}
+
+.post_submit {
+    background-color: rgba(132, 77, 35);
+    border: solid;
+    color: white;
+    font-weight: 900;
+
+    border-radius: 20px;
+    width: 100px;
+    height: 40px;
+    margin-top: 20px;
+    margin-left: auto;
 }
