@@ -1,19 +1,19 @@
 <html>
 
-<head>
-    <link rel="stylesheet" href="/static/style.css" />
-</head>
+    <head>
+        <link rel="stylesheet" href="/static/style.css" />
+    </head>
 
-<body>
-    Viewing results for tag: {{query}} </br>
+    <body>
+        Searched usernames, story ids, and tags for: {{query}} </br>
 
-    {% for story in stories %}
-    </br>
-    Story Id: {{story["id"]}}</br>
-    Posted by: {{story["poster"]}}</br>
-    Title: {{story["title"]}}</br>
-    Text: {{story["text"]}}</br>
-    {% endfor %}
-</body>
+        {% for story in stories %}
+        </br>
+        Story Id: {{story["id"]}}</br>
+        Posted by: {{story["poster"]}}</br>
+        Title: {{story["title"]}}</br>
+        Text: {{story["text"]}}</br>
+        {% endfor %}
+    </body>
 
 </html>
