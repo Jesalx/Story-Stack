@@ -35,6 +35,21 @@ def search_db(query: str) -> list:
     return list(matching_stories)
 
 
+def search_children(story_id):
+    child_titles = []
+    child_text = []
+    child_ids = []
+    children = Story.query.filter_by(parent=story_id).all()
+    print(children)
+    if children:
+        for child in children:
+            child_titles.append(child.title)
+            child_text.append(child.text)
+            child_ids.append(child.id)
+    print(child_titles)
+    return child_titles, child_text, child_ids
+
+
 def get_query_tokens(query: str) -> set:
     """
     Takes a query string and returns a list of tokens.

@@ -81,13 +81,20 @@
                     <div class="post__footer">
                         <span class="material-icons"> repeat </span>
                         <span class="material-icons"> favorite_border </span>
-                        <span class="material-icons"> publish </span>
+                        <span class="material-icons"> publish </span>]
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="right-sidebar">Right sidebar is here</div>
+        <div class="right-sidebar">
+            {% for c in child_titles %}
+            {% set child_id = child_ids[loop.index-1] %}
+            {% set child_text = child_texts[loop.index-1] %}
+
+            <button onclick="window.location.href='story?story_id={{child_id}}'">{{c}}</button>
+            {% endfor %}
+        </div>
     </div>
 
 </body>
