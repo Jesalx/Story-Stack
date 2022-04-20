@@ -4,8 +4,6 @@ Module for testing story.py
 # pylint: disable=missing-function-docstring
 import unittest
 from story import extract_tags, parse_id
-from werkzeug.security import generate_password_hash
-from models import Account
 
 
 class ExtractTagsTests(unittest.TestCase):

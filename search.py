@@ -2,13 +2,22 @@
 Module containing backend functions for the processing search queries.
 """
 
-from models import db, Account, Tag, Story
+from models import Account, Tag, Story
 from story import parse_id
 
 
 def search_db(query: str) -> list:
-    tokens = get_query_tokens(query)
+    """
+    Takes a query string and returns a list of Story objects that
+    match any of the tokens in the query.
 
+    Args:
+        query (str): A string representing a search query.
+
+    Returns:
+        list: A list of Story objects that match the query.
+    """
+    tokens = get_query_tokens(query)
     matching_stories = set()
 
     for token in tokens:
@@ -35,7 +44,17 @@ def search_db(query: str) -> list:
     return list(matching_stories)
 
 
-def search_children(story_id):
+def search_children(story_id: int) -> tuple:
+    """
+    Takes a story id and returns a tuple containing child titles, child text,
+    and child ids.
+
+    Args:
+        story_id (int): An integer representing an existing story id.
+
+    Returns:
+        tuple: A tuple containing child titles, child text, and child ids.
+    """
     child_titles = []
     child_text = []
     child_ids = []
@@ -53,6 +72,12 @@ def search_children(story_id):
 def get_query_tokens(query: str) -> set:
     """
     Takes a query string and returns a list of tokens.
+
+    Args:
+        query (str): A whitespace separated string.
+
+    Returns:
+        set: A set of lowercased and whitespace stripped words.
     """
     tokens = set()
     for token in query.split(" "):

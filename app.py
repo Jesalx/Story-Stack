@@ -16,7 +16,7 @@ from flask_login import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import find_dotenv, load_dotenv
-from models import db, Account, Comment, Like, Tag, Story
+from models import db, Account, Story
 from story import (
     post_story,
     parse_id,
@@ -263,10 +263,23 @@ def search_get():
     return flask.render_template("search.html", query=query, stories=stories)
 
 
-def create_user(email, username, password):
+def create_user(email: str, username: str, password: str) -> Account:
+    """
+    Takes in a user's email, username, and password and returns a new Account
+    object if all the fields are valid. This function should be run after the
+    username and email have been checked for uniqueness.
+
+    Args:
+        email (str): The user's email.
+        username (str): The user's username.
+        password (str): The user's password.
+
+    Returns:
+        Account: An account object representing the new user.
+    """
     regex = r"^[0-9a-zA-Z]+\.?[0-9a-zA-Z]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$"
     if (not (email and username and password)) or (not re.fullmatch(regex, email)):
-        return False
+        return None
     new_user = Account(
         email=email,
         username=username,

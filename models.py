@@ -20,19 +20,21 @@ def get_date():
 
 class Account(db.Model, UserMixin):
     """
-    A Class that represents a single user account containing
-    username, password, and email.
-    TODO - Implement bio
+    A class representing a database model for a user account.
+
+    Attributes:
+        id (int): The database id of the user.
+        email (str): The email of the user.
+        username (str): The unique username of the user.
+        password (str): The hashed password of the user.
+        bio (str): A short description of the user.
     """
 
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(128), unique=True, nullable=True)
     username = db.Column(db.String(32), unique=True, nullable=False)
-    # this has been left nullable to allow for users logging in using
-    # google oauth not to have to also set a password. login attempts or
-    # account creation attempts without a password should still not be allowed
     password = db.Column(db.String(256), unique=False, nullable=True)
     bio = db.Column(db.String(256), unique=False, nullable=True)
-    email = db.Column(db.String(128), unique=True, nullable=True)
 
     def __repr__(self):
         return f"User {self.username}"
@@ -40,8 +42,13 @@ class Account(db.Model, UserMixin):
 
 class Comment(db.Model):
     """
-    A Class that represents a single comment on a Post. It contains
-    the comment text, the user_id of poster, and the post_id
+    A class representing a database model for comments on posts.
+
+    Attributes:
+        id (int): The database id of the comment.
+        userid (int): The database id of the user who posted the comment.
+        storyid (int): The database id of the story the comment is on.
+        text (str): The text of the comment.
     """
 
     id = db.Column(db.Integer, primary_key=True)
@@ -55,9 +62,12 @@ class Comment(db.Model):
 
 class Like(db.Model):
     """
-    A Class that represents a single like on a Post. It contains
-    the post and the user who liked it.
-    TODO - Implement likes
+    A class that represent a database model for likes on a post.
+
+    Attributes:
+        id (int): The database id of the like.
+        userid (int): The database id of the user who liked the post.
+        storyid (int): The database id of the story the like is on.
     """
 
     id = db.Column(db.Integer, primary_key=True)
@@ -78,9 +88,15 @@ tag_story_helper = db.Table(
 
 class Tag(db.Model):
     """
-    A Class containing the tags for a post. The user creates the tags
-    when creating a story. Tags are meant to be used for exploring
-    categories of stories that interest a user.
+    A class that represents a database model for a tag associated with
+    a story. The user creates the tags when creating a story. Tags are
+    meant to be used for exploring categories of stories that interest
+    a user.
+
+    Attributes:
+        id (int): The database id of the tag.
+        name (str): The name of the tag.
+        stories (list): A list of stories associated with the tag.
     """
 
     id = db.Column(db.Integer, primary_key=True)
@@ -95,8 +111,18 @@ class Tag(db.Model):
 
 class Story(db.Model):
     """
-    A Class that represents a single story. It contains the story text,
-    the user_id of poster, a title, and time of posting/editing.
+    A class that represents a database model for a story.
+
+    Attributes:
+        id (int): The database id of the story.
+        parent (int): The database id of the parent story. This will contain
+        -1 if the story is a top level story.
+        userid (int): The database id of the user who created the story.
+        title (str): The title of the story.
+        text (str): The text of the story.
+        tags (list): A list of tags associated with the story.
+        date_posted (datetime): The date the story was posted.
+        date_updated (datetime): The date the story was most recently updated.
     """
 
     id = db.Column(db.Integer, primary_key=True)
