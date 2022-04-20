@@ -24,7 +24,7 @@ from story import (
     get_displayable_stories,
     get_poster_username,
 )
-from search import search_db, get_query_tokens
+from search import search_db, get_query_tokens, search_children
 
 
 load_dotenv(find_dotenv())
@@ -180,7 +180,7 @@ def story():
         story_id = 0
     story_id = parse_id(story_id)
     curr_story = Story.query.filter_by(id=story_id).first()
-
+    child_titles, child_texts, child_ids = search_children(story_id)
     if curr_story:
         return flask.render_template(
             "story.html",
@@ -188,6 +188,9 @@ def story():
             title=curr_story.title,
             text=curr_story.text,
             story_id=curr_story.id,
+            child_titles=child_titles,
+            child_texts=child_texts,
+            child_ids=child_ids,
         )
 
     return flask.render_template("story.html")
