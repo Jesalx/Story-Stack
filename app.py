@@ -62,6 +62,14 @@ def main():
         return flask.redirect(flask.url_for("homepage"))
     return flask.render_template("index.html")
 
+@app.route("/aboutus")
+def aboutus():
+    return flask.render_template("aboutus.html")
+
+@app.route("/info")
+def info():
+    return flask.render_template("info.html")
+
 
 @app.route("/home")
 def homepage():
