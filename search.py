@@ -76,19 +76,10 @@ def search_liked(userid):
     liked_posts = Like.query.filter_by(userid=userid).all()
     if liked_posts:
         for liked in liked_posts:
-            liked_ids.append(liked.storyid)
-            liked_title = (
-                Story.query.filter_by(id=liked.storyid)
-                .with_entities(Story.title)
-                .first()
-            )
-            liked_titles.append(liked_title)
-            liked_text = (
-                Story.query.filter_by(id=liked.storyid)
-                .with_entities(Story.text)
-                .first()
-            )
-            liked_texts.append(liked_title)
+            this_story = Story.query.filter_by(id=liked.storyid).first()
+            liked_ids.append(this_story.id)
+            liked_texts.append(this_story.text)
+            liked_titles.append(this_story.title)
             print(liked_texts)
     return liked_titles, liked_texts, liked_ids
 
