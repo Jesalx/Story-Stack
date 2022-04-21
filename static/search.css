@@ -112,7 +112,6 @@ nav{
     list-style: none;
     
 }
-
 .left-sidebar a{
     text-decoration: none;
     color: white
@@ -159,15 +158,28 @@ nav{
 }
 
 
-.right-sidebar{
-    background: #cbdffa ;
-    flex-basis: 25%;
-    position: sticky;
-    top: 70px;
-    align-self: flex-start;  
-}
-
 
 .main-content{
-    flex-basis: 47%;
+    height: 100vh;
+    flex-basis: 85%;
+    position: sticky;
+    top: 70px;
+    align-self: flex-start;
+    border-radius: 15px;
+    background: rgba(132, 77, 35, 0.2);
+    color: white;
+    margin-left: -50px;
+    margin-top: 20px;
 }
+
+.main-content h1{
+    text-align: Center;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+
+.main-content p{
+    text-align: center;
+    font-size: 15px;
+}
+
