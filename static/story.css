@@ -10,6 +10,7 @@
     padding-bottom: 10px;
     border: solid #844D23;
     border-radius: 15px;
+    margin-bottom: 20px;
 }
 
 .post__avatar {
@@ -65,4 +66,27 @@
     height: 40px;
     margin-top: 20px;
     margin-left: auto;
+}
+
+.right-sidebar button {
+    background-color: rgba(132, 77, 35);
+    border: solid;
+    color: white;
+    font-weight: 900;
+
+    border-radius: 20px;
+    width: 300px;
+    height: 40px;
+    margin-top: 20px;
+    margin-left: auto;
+}
+
+.bookmark {
+    width: 750px;
+    display: flex;
+    background: #fff;
+    padding: 10px;
+    border: solid #844D23;
+    border-radius: 15px;
+    margin-bottom: 20px;
 }

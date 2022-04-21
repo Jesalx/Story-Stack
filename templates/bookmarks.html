@@ -1,20 +1,83 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/static/style.css" />
+    <title>Story</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="/static/story.css" />
+    <link rel="stylesheet" href="/static/home.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
-<header>
-    <h3> Your liked posts: </h3>
-</header>
+
 
 <body>
-    {% for t in liked_titles %}
-    {% set liked_id = liked_ids[loop.index-1] %}
-    {% set liked_text = liked_texts[loop.index-1] %}
-    <p>{{t}}</p>
-    <p>{{liked_text}}</p>
-    <button onclick="window.location.href='story?story_id={{liked_id}}'">Click to view!</button>
-    {% endfor %}
+    <nav>
+        <div class="nav-left">
+            <img src="static/logo2.png" class="logo">
+        </div>
+        <div class="nav-right">
+            <div class="search-box">
+                <img src="/static/search.png">
+                <form method="GET" action="/search">
+                    <input type="text" name="query" placeholder="Search for stories...">
+                </form>
+            </div>
+
+            <div class="content">
+                <ul>
+                    <li> <a href="{{url_for('post')}}"> Create </a></li>
+                    <li> <a href="{{url_for('logout')}}"> LogOut </a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="left-sidebar">
+
+            <a class="menu-item active" href="{{url_for('homepage')}}">
+                <span> <i class="uil uil-home"> </i></span>
+                <h3>Home</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-compass"></i></span>
+                <h3>Explore</h3>
+            </a>
+            <a class="menu-item" href="{{url_for('view_liked')}}">
+                <span> <i class="uil uil-bookmark"></i> </span>
+                <h3>Bookmarks</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-setting"></i> </span>
+                <h3>Settings</h3>
+            </a>
+            <div class="button">
+                <a href="{{ url_for('post') }}" class="btn"> Create Post</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            {% for t in liked_titles %}
+            <div class="post">
+                {% set liked_id = liked_ids[loop.index-1] %}
+                {% set liked_text = liked_texts[loop.index-1] %}
+                <div class="post__avatar">
+                    <img src="/static/user1.png" alt="" />
+                </div>
+                <div class="post_body">
+                    <br>
+                    <div class="title">{{t}}</div>
+                    <br>
+                    <div class="post_content">{{liked_text}}</div>
+                    <button class="post_submit" onclick="window.location.href='story?story_id={{liked_id}}'">Click to
+                        view!</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="right-sidebar"></div>
+    </div>
 </body>
 
 </html>
