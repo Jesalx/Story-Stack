@@ -1,102 +1,107 @@
 <html>
 
-    <head>
-        <title>Story</title>
-        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-        <link rel="stylesheet" href="/static/story.css" />
-        <link rel="stylesheet" href="/static/home.css" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    </head>
+<head>
+    <title>Story</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="/static/story.css" />
+    <link rel="stylesheet" href="/static/home.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
 
-    <body>
-        <nav>
-            <div class="nav-left">
-                <img src="static/logo2.png" class="logo">
-            </div>
-            <div class="nav-right">
-                <div class="search-box">
-                    <img src="/static/search.png">
-                    <form method="GET" action="/search">
-                        <input type="text" name="query" placeholder="Search for stories...">
-                    </form>
-                </div>
-
-                <div class="content">
-                    <ul>
-                        <li> <a href="{{url_for('post')}}"> Create </a></li>
-                        <li> <a href="{{url_for('logout')}}"> LogOut </a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </nav>
-
-        <div class="container">
-            <div class="left-sidebar">
-
-                <a class="menu-item active" href="{{url_for('homepage')}}">
-                    <span> <i class="uil uil-home"> </i></span>
-                    <h3>Home</h3>
-                </a>
-                <a class="menu-item">
-                    <span> <i class="uil uil-compass"></i></span>
-                    <h3>Explore</h3>
-                </a>
-                <a class="menu-item" href="{{url_for('view_liked')}}">
-                    <span> <i class="uil uil-bookmark"></i> </span>
-                    <h3>Bookmarks</h3>
-                </a>
-                <a class="menu-item">
-                    <span> <i class="uil uil-setting"></i> </span>
-                    <h3>Settings</h3>
-                </a>
-                <div class="button">
-                    <a href="{{ url_for('post') }}" class="btn"> Create Post</a>
-                </div>
+<body>
+    <nav>
+        <div class="nav-left">
+            <img src="static/logo2.png" class="logo">
+        </div>
+        <div class="nav-right">
+            <div class="search-box">
+                <img src="/static/search.png">
+                <form method="GET" action="/search">
+                    <input type="text" name="query" placeholder="Search for stories...">
+                </form>
             </div>
 
-            <div class="main-content">
-                <div class="post">
-                    <div class="post__avatar">
-                        <img src="/static/user1.png" alt="" />
+            <div class="content">
+                <ul>
+                    <li> <a href="{{url_for('post')}}"> Create </a></li>
+                    <li> <a href="{{url_for('logout')}}"> LogOut </a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="left-sidebar">
+
+            <a class="menu-item active" href="{{url_for('homepage')}}">
+                <span> <i class="uil uil-home"> </i></span>
+                <h3>Home</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-compass"></i></span>
+                <h3>Explore</h3>
+            </a>
+            <a class="menu-item" href="{{url_for('view_liked')}}">
+                <span> <i class="uil uil-bookmark"></i> </span>
+                <h3>Bookmarks</h3>
+            </a>
+            <a class="menu-item">
+                <span> <i class="uil uil-setting"></i> </span>
+                <h3>Settings</h3>
+            </a>
+            <div class="button">
+                <a href="{{ url_for('post') }}" class="btn"> Create Post</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="post">
+                <div class="post__avatar">
+                    <img src="/static/user1.png" alt="" />
+                </div>
+                <div class="post_body">
+                    <div class="poster_name">
+                        {{poster_name}}
                     </div>
-                    <div class="post_body">
-                        <div class="poster_name">
-                            {{poster_name}}
-                        </div>
-                        <br>
+                    <br>
 
-                        <div class="title">
-                            {{title}}
-                        </div>
-                        <br>
+                    <div class="title">
+                        {{title}}
+                    </div>
+                    <br>
 
-                        <div class="post_content">
-                            {{text}}
+                    <div class="post_content">
+                        {{text}}
 
-                        </div>
-                        <br>
-                        <button class="post_submit"
-                            onclick="window.location.href='post?parent={{story_id}}'">Branch</button>
-                        <div class="post__footer">
-                            <span class="material-icons"> repeat </span>
-                            <span class="material-icons"> favorite_border </span>
-                            <span class="material-icons"> publish </span>]
-                        </div>
+                    </div>
+                    <br>
+                    <button class="post_submit"
+                        onclick="window.location.href='post?parent={{story_id}}'">Branch</button>
+                    <div class="post__footer">
+                        <span class="material-icons"> repeat </span>
+                        <span class="material-icons"> favorite_border </span>
+                        <span class="material-icons"> publish </span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="right-sidebar">
+        <div class="right-sidebar">
+            {% if child_titles %}
+            <div class="right-sidebar__header">
+                <h3>Related posts:</h3>
+                {% endif %}
                 {% for c in child_titles %}
                 {% set child_id = child_ids[loop.index-1] %}
                 {% set child_text = child_texts[loop.index-1] %}
 
                 <button onclick="window.location.href='story?story_id={{child_id}}'">{{c}}</button>
                 {% endfor %}
+
             </div>
         </div>
-
-    </body>
+    </div>
+</body>
 
 </html>
