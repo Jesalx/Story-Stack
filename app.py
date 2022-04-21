@@ -16,7 +16,7 @@ from flask_login import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import find_dotenv, load_dotenv
-from models import db, Account, Story
+from models import db, Account, Story, Like
 from story import (
     post_story,
     parse_id,
@@ -24,7 +24,7 @@ from story import (
     get_displayable_stories,
     get_poster_username,
 )
-from search import search_db, get_query_tokens, search_children
+from search import search_db, get_query_tokens, search_children, search_liked
 
 
 load_dotenv(find_dotenv())
@@ -130,6 +130,7 @@ def login():
     access this page if they are not logged in. If the user is logged in
     then they will be taken to the main page of the application.
     """
+
     if current_user.is_authenticated:
         return flask.redirect("/")
     return flask.render_template("login.html")
@@ -154,6 +155,7 @@ def login_post():
         return flask.redirect("/login")
 
     login_user(user, remember=True)
+    # print(current_user.id)
     return flask.redirect("/home")
 
 
@@ -269,6 +271,18 @@ def search_get():
     stories = get_displayable_stories(matching_stories)
 
     return flask.render_template("search.html", query=query, stories=stories)
+
+
+@app.route("/view_liked", methods=["GET"])
+@login_required
+def view_liked():
+    liked_titles, liked_texts, liked_ids = search_liked(current_user.id)
+    return flask.render_template(
+        "bookmarks.html",
+        liked_titles=liked_titles,
+        liked_ids=liked_ids,
+        liked_texts=liked_texts,
+    )
 
 
 def create_user(email: str, username: str, password: str) -> Account:

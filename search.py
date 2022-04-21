@@ -2,7 +2,7 @@
 Module containing backend functions for the processing search queries.
 """
 
-from models import Account, Tag, Story
+from models import Account, Tag, Story, Like
 from story import parse_id
 
 
@@ -67,6 +67,21 @@ def search_children(story_id: int) -> tuple:
             child_ids.append(child.id)
     print(child_titles)
     return child_titles, child_text, child_ids
+
+
+def search_liked(userid):
+    liked_titles = []
+    liked_ids = []
+    liked_texts = []
+    liked_posts = Like.query.filter_by(userid=userid).all()
+    if liked_posts:
+        for liked in liked_posts:
+            this_story = Story.query.filter_by(id=liked.storyid).first()
+            liked_ids.append(this_story.id)
+            liked_texts.append(this_story.text)
+            liked_titles.append(this_story.title)
+            print(liked_texts)
+    return liked_titles, liked_texts, liked_ids
 
 
 def get_query_tokens(query: str) -> set:
