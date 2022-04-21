@@ -1,14 +1,14 @@
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: monospace;
 }
 
-body{
+body {
     background: #efefef;
 }
 
-nav{
+nav {
     height: 6vh;
     display: flex;
     align-items: center;
@@ -20,17 +20,18 @@ nav{
     z-index: 100;
 }
 
-.logo{
+.logo {
     width: 120px;
     margin-left: -70px;
 }
 
-.nav-left, .nav-right{
+.nav-left,
+.nav-right {
     display: flex;
     align-items: center;
 }
 
-.search-box{
+.search-box {
     margin-right: 300px;
     background: #efefef;
     width: 450px;
@@ -40,11 +41,11 @@ nav{
     padding: 0 15px;
 }
 
-.search-box img{
+.search-box img {
     width: 18px;
 }
 
-.search-box input{
+.search-box input {
     text-align: center;
     width: 100%;
     background: transparent;
@@ -53,8 +54,8 @@ nav{
     border: 0;
 }
 
-.content{
-    margin:auto;
+.content {
+    margin: auto;
     width: 30%;
     padding: 0;
     display: flex;
@@ -63,20 +64,20 @@ nav{
     margin-right: -75px;
 }
 
-.content ul li{
+.content ul li {
     list-style: none;
     display: inline-block;
     margin: 5 10px;
     position: relative;
 }
 
-.content ul li a{
+.content ul li a {
     text-decoration: none;
-    color: #fff ;
+    color: #fff;
     text-transform: uppercase;
 }
 
-.content ul li::after{
+.content ul li::after {
     content: '';
     height: 3px;
     width: 0;
@@ -87,17 +88,17 @@ nav{
     transition: 0.5s;
 }
 
-.content ul li:hover::after{
-   width: 100%;
+.content ul li:hover::after {
+    width: 100%;
 }
 
-.container{
+.container {
     display: flex;
     justify-content: space-between;
     padding: 13px 5%;
 }
 
-.left-sidebar{
+.left-sidebar {
     height: 40vh;
     flex-basis: 15%;
     position: sticky;
@@ -130,18 +131,18 @@ nav{
     text-decoration: none;
 }
 
-.left-sidebar .menu-item:hover{
-    background: rgba(132, 77, 35) ;
+.left-sidebar .menu-item:hover {
+    background: rgba(132, 77, 35);
     width: 150px;
     border-radius: 25px;
 }
 
-.left-sidebar .button{
+.left-sidebar .button {
     text-align: center;
     margin-top: 20px;
 }
 
-.left-sidebar .btn{
+.left-sidebar .btn {
     text-decoration: none;
     width: 200px;
     padding: 10px 25px;
@@ -150,7 +151,7 @@ nav{
     font-weight: bold;
     border: 2px solid #844D23;
     background: transparent;
-    color: #fff; 
+    color: #fff;
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -159,8 +160,8 @@ nav{
 }
 
 
-.right-sidebar{
-    background: #cbdffa ;
+.right-sidebar {
+    background: #cbdffa;
     flex-basis: 25%;
     position: sticky;
     top: 70px;
@@ -168,6 +169,6 @@ nav{
 }
 
 
-.main-content{
+.main-content {
     flex-basis: 47%;
 }
