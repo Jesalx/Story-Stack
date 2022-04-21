@@ -6,22 +6,24 @@
     </head>
 
     <body>
-        <div class = "banner">
-            <div class = "navbar">
-                <img src = "static/logo2.png" class = "logo">
+        <div class="banner">
+            <div class="navbar">
+                <a href="{{ url_for('main')}}">
+                    <img src="static/logo2.png" class="logo">
+                </a>
                 <ul>
-                    <li> <a href = "{{ url_for('aboutus') }}"> About Us </a></li>
-                    <li> <a href = "{{ url_for('info') }}"> Features </a></li>
-                
+                    <li> <a href="{{ url_for('aboutus') }}"> About Us </a></li>
+                    <li> <a href="{{ url_for('info') }}"> Features </a></li>
+
                 </ul>
             </div>
 
             <div class="content">
                 <h1> STORY STACK</h1>
                 <p> A story for you written by you, <br> You are the only author here, <br> Begin your story</p>
-                <div class = "button">
-                    <a href="{{ url_for('signup') }}" class="btn">  CREATE AN ACCOUNT</a>
-                    <a href="{{ url_for('login') }}" class="btn">  LOG IN</a>
+                <div class="button">
+                    <a href="{{ url_for('signup') }}" class="btn"> CREATE AN ACCOUNT</a>
+                    <a href="{{ url_for('login') }}" class="btn"> LOG IN</a>
                 </div>
             </div>
         </div>
