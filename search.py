@@ -69,7 +69,18 @@ def search_children(story_id: int) -> tuple:
     return child_titles, child_text, child_ids
 
 
-def search_liked(userid):
+def search_liked(userid: int):
+    """
+    Takes a userid and returns a tuple containing information about the stories
+    that the user has liked.
+
+    Args:
+        userid (int): An integer representing an existing user id.
+
+    Returns:
+        Tuple: A tuple of lists containing the story ids, titles, and text of
+        the stories that the user has liked.
+    """
     liked_titles = []
     liked_ids = []
     liked_texts = []
