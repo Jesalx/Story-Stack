@@ -62,12 +62,21 @@ def main():
         return flask.redirect(flask.url_for("homepage"))
     return flask.render_template("index.html")
 
+
 @app.route("/aboutus")
 def aboutus():
+    """
+    App route for a small about us page.
+    """
     return flask.render_template("aboutus.html")
+
 
 @app.route("/info")
 def info():
+    """
+    App route for a page containing information about the purpose
+    of the app.
+    """
     return flask.render_template("info.html")
 
 
@@ -276,6 +285,9 @@ def search_get():
 @app.route("/view_liked", methods=["GET"])
 @login_required
 def view_liked():
+    """
+    App route to view stories that the user has liked/bookmarked.
+    """
     liked_titles, liked_texts, liked_ids = search_liked(current_user.id)
     return flask.render_template(
         "bookmarks.html",
