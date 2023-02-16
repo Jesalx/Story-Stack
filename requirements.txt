@@ -4,4 +4,4 @@ Flask-SQLAlchemy==2.1
 psycopg2-binary
 requests
 python-dotenv
-Werkzeug==2.0.2
+Werkzeug==2.2.3
